@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>Темний улюбленець</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{height:100%;background:#0d0912;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eadcff}
+body{display:flex;align-items:center;justify-content:center}
+.app{position:relative;width:min(100vw,100vh,600px);aspect-ratio:1;overflow:hidden;border-radius:22px;background:radial-gradient(circle at 82% 12%,#3a2350 0,transparent 40%),linear-gradient(170deg,#1c1226,#120c1a 55%,#1e0f1c);display:grid;grid-template-rows:auto 1fr auto auto;padding:10px;gap:8px;border:1px solid #3d2a55;box-shadow:0 0 30px #7b3fbf44}
+.app:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(1px 1px at 12% 20%,#fff9,transparent),radial-gradient(1px 1px at 30% 8%,#fff7,transparent),radial-gradient(1.5px 1.5px at 65% 26%,#fffa,transparent),radial-gradient(1px 1px at 48% 14%,#fff6,transparent),radial-gradient(1px 1px at 90% 40%,#fff8,transparent),radial-gradient(1px 1px at 22% 44%,#fff5,transparent)}
+.moon{position:absolute;right:7%;top:9%;width:34px;height:34px;border-radius:50%;box-shadow:-8px 4px 0 0 #e9e2ff;opacity:.85;pointer-events:none}
+.top{display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:15px;z-index:1}
+#ttl{font-family:Georgia,"Times New Roman",serif;letter-spacing:.06em;color:#f3e9ff;text-shadow:0 0 8px #b48cff88}
+.lv{font-size:12px;font-weight:600;color:#a993c9}
+.xpb{height:5px;width:90px;background:#ffffff1a;border-radius:4px;overflow:hidden;margin-top:3px}
+.xpb i{display:block;height:100%;background:linear-gradient(90deg,#e0245e,#9b5cff)}
+.chip{background:#231833;border:1px solid #4a3466;border-radius:14px;padding:6px 10px;font-size:14px;font-weight:700;color:#eadcff;cursor:pointer}
+.stage{position:relative;display:flex;align-items:center;justify-content:center;border-radius:18px;background:radial-gradient(ellipse at 50% 92%,#9b5cff33 0 28%,transparent 29%);overflow:hidden}
+.stage.night{background:radial-gradient(ellipse at 50% 92%,#9b5cff1a 0 28%,transparent 29%),#05030acc}
+#pet{height:96%;max-width:80%;cursor:pointer;transform-origin:50% 100%;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 0 10px #9b5cff55)}
+#pet.sleep{animation:breathe 4s ease-in-out infinite;filter:brightness(.7)}
+#pet.jump{animation:jump .5s ease}
+@keyframes bob{0%,100%{transform:translateY(0) scale(var(--s,1))}50%{transform:translateY(-6px) scale(var(--s,1))}}
+@keyframes breathe{0%,100%{transform:scale(var(--s,1))}50%{transform:scale(calc(var(--s,1)*1.03),calc(var(--s,1)*.97))}}
+@keyframes jump{0%,100%{transform:translateY(0) scale(var(--s,1))}40%{transform:translateY(-22px) scale(var(--s,1))}}
+.eyes{animation:blink 4.5s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.bubble{position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#1b1226;border:1px solid #6b4a94;color:#f3e9ff;padding:7px 12px;border-radius:14px;font-size:14px;font-weight:600;max-width:88%;width:max-content;text-align:center;box-shadow:0 0 14px #9b5cff55;opacity:0;transition:opacity .25s;pointer-events:none;z-index:3}
+.bubble.on{opacity:1}
+.fx{position:absolute;font-size:28px;pointer-events:none;animation:up 1.3s ease-out forwards;z-index:2}
+@keyframes up{to{transform:translateY(-90px) scale(1.3);opacity:0}}
+.zz{position:absolute;right:18%;top:22%;font-size:22px;color:#b48cff;font-weight:800;font-family:Georgia,serif;animation:zz 2.4s infinite}
+@keyframes zz{0%{opacity:0;transform:translate(0,10px)}50%{opacity:1}100%{opacity:0;transform:translate(16px,-26px)}}
+.bars{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:13px}
+.bar{display:flex;align-items:center;gap:6px}
+.bar b{flex:1;height:9px;background:#ffffff14;border-radius:6px;overflow:hidden;border:1px solid #ffffff10}
+.bar b i{display:block;height:100%;border-radius:6px;transition:width .4s,background .4s}
+.btns{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.btn{border:1px solid #4a3466;border-radius:16px;background:linear-gradient(#2a1d3b,#1d142a);padding:8px 2px;font-size:22px;line-height:1.1;cursor:pointer;box-shadow:0 3px 0 #0a0610;color:#eadcff;transition:transform .1s}
+.btn small{display:block;font-size:11px;font-weight:600;margin-top:2px;color:#c9b4ea}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #0a0610}
+.btn:disabled{opacity:.35}
+.ov{position:absolute;inset:0;background:#120c1af5;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;z-index:5;border-radius:22px;text-align:center}
+.ov.on{display:flex}
+.ov h2{font-size:19px;font-family:Georgia,serif;letter-spacing:.05em;text-shadow:0 0 10px #b48cff99}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.card{border:2px solid #3d2a55;background:#1d142a;border-radius:16px;padding:6px;width:30%;cursor:pointer;font-weight:700;font-size:13px;color:#eadcff}
+.card.sel{border-color:#e0245e;box-shadow:0 0 12px #e0245e66}
+.card svg{width:100%}
+.nm{border:1px solid #4a3466;background:#231833;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:700;cursor:pointer;color:#eadcff}
+.nm.sel{background:#e0245e;border-color:#e0245e;color:#fff}
+.go{border:none;background:linear-gradient(90deg,#e0245e,#7b3fbf);color:#fff;font-weight:800;font-size:16px;border-radius:16px;padding:10px 26px;cursor:pointer;box-shadow:0 0 14px #e0245e55}
+.shop{width:100%;display:grid;gap:6px}
+.it{display:flex;align-items:center;justify-content:space-between;background:#1d142a;border:1px solid #3d2a55;border-radius:12px;padding:5px 10px;font-weight:600;font-size:14px}
+.it>div{display:flex;align-items:center;gap:8px}
+.it svg{width:28px;height:28px}
+.it button{border:1px solid #4a3466;border-radius:10px;padding:5px 10px;font-weight:700;background:#231833;color:#eadcff;cursor:pointer}
+.it button.w{background:#e0245e;border-color:#e0245e;color:#fff}
+.lnk{background:none;border:none;color:#8f78b3;font-size:12px;text-decoration:underline;cursor:pointer}
+#game{position:absolute;inset:0;display:none;z-index:4}
+#game.on{display:block}
+.ghud{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-weight:800;font-size:15px;color:#f3e9ff;text-shadow:0 0 6px #000}
+.star{position:absolute;top:-40px;font-size:34px;border:none;background:none;cursor:pointer;animation:fall linear forwards;padding:6px;filter:drop-shadow(0 0 6px #b48cff)}
+@keyframes fall{to{transform:translateY(calc(100% + 260px)) rotate(200deg)}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="moon"></div>
+  <div class="top">
+    <div><div id="ttl">—</div><div class="lv" id="lv"></div><div class="xpb"><i id="xp"></i></div></div>
+    <button class="chip" id="shopB">💎 <span id="coins">0</span> · 🕸️</button>
+  </div>
+  <div class="stage" id="stage">
+    <div class="bubble" id="bub"></div>
+    <svg id="pet" viewBox="0 0 200 200"></svg>
+    <div id="game"><div class="ghud" id="ghud"></div></div>
+  </div>
+  <div class="bars">
+    <div class="bar">🍒<b><i id="bf"></i></b></div>
+    <div class="bar">🖤<b><i id="bh"></i></b></div>
+    <div class="bar">⚡<b><i id="be"></i></b></div>
+    <div class="bar">🫧<b><i id="bc"></i></b></div>
+  </div>
+  <div class="btns">
+    <button class="btn" id="aF">🍒<small>Годувати</small></button>
+    <button class="btn" id="aP">🔮<small>Гратися</small></button>
+    <button class="btn" id="aS">🌙<small>Спати</small></button>
+    <button class="btn" id="aW">🛁<small>Купати</small></button>
+  </div>
+
+  <div class="ov" id="start">
+    <h2>Обери своє дитя ночі 🦇</h2>
+    <div class="row" id="types"></div>
+    <div style="font-weight:700;font-size:14px">Ім'я:</div>
+    <div class="row" id="names"></div>
+    <button class="go" id="goB">Пробудити 🖤</button>
+  </div>
+
+  <div class="ov" id="shopO">
+    <h2>Темна крамничка 🕸️</h2>
+    <div class="shop" id="shopL"></div>
+    <button class="go" id="shopX">Готово</button>
+    <button class="lnk" id="resetB">Почати з новим улюбленцем</button>
+  </div>
+</div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+/* ===== Міст до Telegram =====
+   У Telegram Mini App стан зберігається в Telegram CloudStorage
+   (прив'язаний до акаунта, працює на всіх пристроях).
+   Поза Telegram — у localStorage браузера. */
+const TG=window.Telegram&&window.Telegram.WebApp;
+const KEY='goth_pet_v1';
+const hasCloud=()=>TG&&TG.initData&&TG.CloudStorage;
+const Bridge={
+  local(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},
+  load(cb){
+    if(hasCloud()){TG.CloudStorage.getItem(KEY,(err,v)=>{let r=null;try{r=v?JSON.parse(v):null}catch(e){}cb(r||Bridge.local())})}
+    else cb(Bridge.local());
+  },
+  save(s){const v=JSON.stringify(s);try{localStorage.setItem(KEY,v)}catch(e){}if(hasCloud())TG.CloudStorage.setItem(KEY,v)},
+  clear(){try{localStorage.removeItem(KEY)}catch(e){}if(hasCloud())TG.CloudStorage.removeItem(KEY)}
+};
+
+const $=id=>document.getElementById(id);
+const cl=v=>Math.max(0,Math.min(100,v));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const SIL='#c9c9d9',VIO='#b48cff';
+const TYPES={
+  cat:{n:'Чорний кіт',b:'#2b2433',i:'#3d3349',o:VIO,eye:'#e0245e'},
+  bat:{n:'Кажанчик',b:'#3b2b4f',i:'#5a4475',o:VIO,eye:'#9b5cff'},
+  gho:{n:'Привид',b:'#ece6ff',i:'#ffffff',o:'#8d78c9',eye:'#1a0f1f'}
+};
+const NAMES=['Морок','Ліліт','Тінь','Мара','Нікс','Вія'];
+
+/* аксесуари: [ключ, назва, ціна] — малюються SVG */
+const SHOP=[['pier','Пірсинг',10],['bow','Чорний бант',15],['web','Павутинка',20],['chok','Чокер',25],['chain','Ланцюжок',30],['crown','Темна корона',50]];
+function accSVG(k){
+  switch(k){
+    case 'pier':return `<circle cx="146" cy="52" r="5" fill="none" stroke="${SIL}" stroke-width="2.5"/><circle cx="150" cy="60" r="2.5" fill="${SIL}"/>`;
+    case 'bow':return `<g transform="translate(140 40) rotate(18)"><path d="M0 0 L-17 -11 L-15 11Z M0 0 L17 -11 L15 11Z" fill="#0b0b0f" stroke="${VIO}" stroke-width="1.5" stroke-linejoin="round"/><circle r="4.5" fill="#e0245e"/></g>`;
+    case 'web':return `<g stroke="#e9e2ff" stroke-width="1.1" fill="none" opacity=".75"><path d="M46 44 L84 40 M46 44 L52 80 M46 44 L74 70"/><path d="M58 43 Q57 52 49 56 M70 42 Q66 58 50 68 M80 41 Q75 62 51 78"/></g>`;
+    case 'chok':return `<path d="M66 134 Q100 150 134 134" stroke="#0b0b0f" stroke-width="8" fill="none" stroke-linecap="round"/>${[78,90,110,122].map(x=>`<polygon points="${x-3},${139+(x>100?122-x:x-78)/6} ${x+3},${139+(x>100?122-x:x-78)/6} ${x},${147+(x>100?122-x:x-78)/6}" fill="${SIL}"/>`).join('')}<circle cx="100" cy="150" r="5" fill="none" stroke="${SIL}" stroke-width="2.5"/>`;
+    case 'chain':return `<path d="M66 148 Q100 178 134 148" stroke="${SIL}" stroke-width="2.5" stroke-dasharray="5 3" fill="none"/><path d="M100 170 C94 163 92 172 100 178 C108 172 106 163 100 170Z" fill="#0b0b0f" stroke="${SIL}" stroke-width="1.5"/>`;
+    case 'crown':return `<path d="M72 42 L78 16 L89 31 L100 10 L111 31 L122 16 L128 42Z" fill="#0b0b0f" stroke="${SIL}" stroke-width="2" stroke-linejoin="round"/><circle cx="100" cy="30" r="4.5" fill="#e0245e"/><circle cx="80" cy="34" r="2" fill="${VIO}"/><circle cx="120" cy="34" r="2" fill="${VIO}"/>`;
+  }return '';
+}
+
+let s=null;
+let sel={t:'cat',n:'Морок'};
+
+function petSVG(t,o={}){
+  const C=TYPES[t],mood=o.mood??2,sl=o.sleep,dirty=o.dirty,w=o.wear||[];
+  const st=`stroke="${C.o}" stroke-width="3" stroke-linejoin="round"`;
+  let back='',ears='',body;
+  body=`<ellipse cx="100" cy="160" rx="40" ry="30" fill="${C.b}" ${st}/><ellipse cx="100" cy="165" rx="22" ry="17" fill="${C.i}"/>
+<ellipse cx="78" cy="188" rx="13" ry="8" fill="${C.b}" ${st}/><ellipse cx="122" cy="188" rx="13" ry="8" fill="${C.b}" ${st}/>`;
+  if(t==='cat'){
+    ears=`<polygon points="52,62 60,14 94,40" fill="${C.b}" ${st}/><polygon points="62,52 64,28 82,42" fill="#e0245e" opacity=".7"/>
+<polygon points="148,62 140,14 106,40" fill="${C.b}" ${st}/><polygon points="138,52 136,28 118,42" fill="#e0245e" opacity=".7"/>`;
+    back=`<path d="M135 165 Q178 160 170 118 Q166 102 154 110" fill="none" stroke="${C.o}" stroke-width="15" stroke-linecap="round"/><path d="M135 165 Q178 160 170 118 Q166 102 154 110" fill="none" stroke="${C.b}" stroke-width="10" stroke-linecap="round"/>`;
+  }else if(t==='bat'){
+    ears=`<polygon points="56,58 50,6 92,38" fill="${C.b}" ${st}/><polygon points="62,50 58,22 82,40" fill="#e0245e" opacity=".6"/>
+<polygon points="144,58 150,6 108,38" fill="${C.b}" ${st}/><polygon points="138,50 142,22 118,40" fill="#e0245e" opacity=".6"/>`;
+    const wing=d=>`<path d="${d}" fill="#24192f" ${st}/>`;
+    back=wing('M68 150 Q30 118 6 128 Q20 140 14 152 Q28 150 30 166 Q44 156 52 170 Q60 160 70 168Z')+wing('M132 150 Q170 118 194 128 Q180 140 186 152 Q172 150 170 166 Q156 156 148 170 Q140 160 130 168Z');
+  }else{
+    body=`<path d="M58 118 L58 176 Q68 192 79 178 Q89 192 100 178 Q111 192 121 178 Q132 192 142 176 L142 118Z" fill="${C.b}" ${st}/>
+<ellipse cx="54" cy="140" rx="9" ry="14" transform="rotate(25 54 140)" fill="${C.b}" ${st}/><ellipse cx="146" cy="140" rx="9" ry="14" transform="rotate(-25 146 140)" fill="${C.b}" ${st}/>`;
+  }
+  const head=`<circle cx="100" cy="90" r="56" fill="${C.b}" ${st}/>`;
+  const eyes=sl
+    ?`<path d="M68 92 Q78 100 88 92 M112 92 Q122 100 132 92" fill="none" stroke="${t==='gho'?'#1a0f1f':VIO}" stroke-width="4" stroke-linecap="round"/>`
+    :`<g class="eyes"><ellipse cx="78" cy="90" rx="10.5" ry="13.5" fill="${C.eye}"/><ellipse cx="122" cy="90" rx="10.5" ry="13.5" fill="${C.eye}"/>
+<ellipse cx="78" cy="92" rx="5.5" ry="8.5" fill="#12080f"/><ellipse cx="122" cy="92" rx="5.5" ry="8.5" fill="#12080f"/>
+<circle cx="74" cy="85" r="4" fill="#fff"/><circle cx="118" cy="85" r="4" fill="#fff"/><circle cx="82" cy="96" r="2" fill="#fff"/><circle cx="126" cy="96" r="2" fill="#fff"/>
+<path d="M66 78 L71 82 M134 78 L129 82" stroke="${t==='gho'?'#1a0f1f':'#0b0b0f'}" stroke-width="3" stroke-linecap="round"/></g>`;
+  const ink=t==='gho'?'#1a0f1f':'#f3e9ff';
+  const mouth=sl?'M96 110 Q100 113 104 110':mood===2?'M90 107 Q95 116 100 109 Q105 116 110 107':mood===1?'M94 111 L106 111':'M91 115 Q100 106 109 115';
+  const fang=(!sl&&mood>0)?`<polygon points="103,${mood===2?110:111} 108,${mood===2?110:111} 105.5,${mood===2?117:118}" fill="#fff" stroke="${ink}" stroke-width=".8"/>`:'';
+  const tear=(!sl&&mood===0)?`<path d="M134 98 Q138 106 134 110 Q130 106 134 98Z" fill="#7cc8ff"/>`:'';
+  const spots=dirty?`<circle cx="70" cy="122" r="5" fill="#7a6a5a" opacity=".6"/><circle cx="128" cy="62" r="4" fill="#7a6a5a" opacity=".6"/><circle cx="112" cy="160" r="6" fill="#7a6a5a" opacity=".6"/>`:'';
+  const order=['chok','chain','web','pier','bow','crown'];
+  const acc=order.filter(k=>w.includes(k)).map(accSVG).join('');
+  return `${back}${body}${ears}${head}
+<ellipse cx="64" cy="108" rx="10" ry="6" fill="#b48cff" opacity=".35"/><ellipse cx="136" cy="108" rx="10" ry="6" fill="#b48cff" opacity=".35"/>
+${eyes}<path d="${mouth}" fill="none" stroke="${ink}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${fang}${tear}${spots}${acc}`;
+}
+
+/* ===== Старт ===== */
+function drawStart(){
+  $('types').innerHTML=Object.keys(TYPES).map(k=>`<div class="card ${sel.t===k?'sel':''}" data-t="${k}"><svg viewBox="0 0 200 200">${petSVG(k)}</svg>${TYPES[k].n}</div>`).join('');
+  $('names').innerHTML=NAMES.map(n=>`<button class="nm ${sel.n===n?'sel':''}" data-n="${n}">${n}</button>`).join('');
+}
+$('types').onclick=e=>{const c=e.target.closest('[data-t]');if(c){sel.t=c.dataset.t;drawStart()}};
+$('names').onclick=e=>{const c=e.target.closest('[data-n]');if(c){sel.n=c.dataset.n;drawStart()}};
+$('goB').onclick=()=>{
+  s={t:sel.t,n:sel.n,f:80,h:80,e:80,c:90,xp:0,lv:1,coins:5,own:[],w:[],sl:0,ts:Date.now()};
+  $('start').classList.remove('on');save();render();say(`Я ${s.n}. Не чекай, що я буду милою… 🖤`);
+};
+
+/* ===== Логіка ===== */
+function tick(){
+  const now=Date.now(),m=(now-s.ts)/60000;if(m<=0)return;s.ts=now;
+  if(s.sl){s.e=cl(s.e+m*3);s.f=cl(s.f-m*.12);if(s.e>=100){s.sl=0;say('Ніч закінчилась. Шкода 🌑')}}
+  else{s.f=cl(s.f-m*.3);s.h=cl(s.h-m*.22);s.e=cl(s.e-m*.15);s.c=cl(s.c-m*.18)}
+}
+function mood(){const a=(s.f+s.h+s.e+s.c)/4,lo=Math.min(s.f,s.h,s.e,s.c);return lo<15||a<35?0:a<65?1:2}
+function save(){Bridge.save(s)}
+function addXp(n){
+  s.xp+=n;const need=s.lv*30;
+  if(s.xp>=need){s.xp-=need;s.lv++;s.coins+=10;setTimeout(()=>{say(`Рівень ${s.lv}! 🦇 +10💎`);fx('🦇');fx('✨')},900)}
+}
+let bt;
+function say(t){const b=$('bub');b.textContent=t;b.classList.add('on');clearTimeout(bt);bt=setTimeout(()=>b.classList.remove('on'),2800)}
+function fx(e){
+  const d=document.createElement('div');d.className='fx';d.textContent=e;
+  d.style.left=(35+Math.random()*30)+'%';d.style.top=(40+Math.random()*20)+'%';
+  $('stage').appendChild(d);setTimeout(()=>d.remove(),1300);
+}
+function hop(){const p=$('pet');p.classList.remove('jump');void p.offsetWidth;p.classList.add('jump');setTimeout(()=>p.classList.remove('jump'),500)}
+
+function render(){
+  if(!s)return;
+  const stage=s.lv<3?.82:s.lv<6?.92:1,st=s.lv<3?'дитя ночі':s.lv<6?'бунтар':'легенда темряви 🦇';
+  $('ttl').textContent=`${s.n} · ${TYPES[s.t].n}`;
+  $('lv').textContent=`Рівень ${s.lv} · ${st}`;
+  $('xp').style.width=(s.xp/(s.lv*30)*100)+'%';
+  $('coins').textContent=s.coins;
+  const p=$('pet');p.style.setProperty('--s',stage);
+  p.innerHTML=petSVG(s.t,{mood:mood(),sleep:s.sl,dirty:s.c<40,wear:s.w});
+  p.classList.toggle('sleep',!!s.sl);
+  $('stage').classList.toggle('night',!!s.sl);
+  const z=$('stage').querySelector('.zz');
+  if(s.sl&&!z){const d=document.createElement('div');d.className='zz';d.textContent='Z z';$('stage').appendChild(d)}
+  if(!s.sl&&z)z.remove();
+  [['bf',s.f],['bh',s.h],['be',s.e],['bc',s.c]].forEach(([id,v])=>{
+    const i=$(id);i.style.width=v+'%';i.style.background=v<25?'#e0245e':v<55?'#c77dff':'linear-gradient(90deg,#7b3fbf,#b48cff)';
+  });
+  $('aS').innerHTML=s.sl?'🌑<small>Розбудити</small>':'🌙<small>Спати</small>';
+  ['aF','aP','aW'].forEach(id=>$(id).disabled=!!s.sl);
+}
+
+/* ===== Дії ===== */
+$('aF').onclick=()=>{
+  if(s.f>92)return say('Досить. Я не голодна 🙄');
+  s.f=cl(s.f+25);addXp(4);fx(pick(['🍒','🫐','🍇','🧁','🍫','🍬']));hop();
+  say(pick(['Ну… смачно, мабуть 🖤','Вишні — їжа темряви 🍒','Не кажи нікому, що мені сподобалось','Ще. Будь ласка.']));save();render();
+};
+$('aW').onclick=()=>{
+  s.c=100;s.h=cl(s.h+5);addXp(2);fx('🫧');fx('🫧');fx('🖤');
+  say(pick(['Чиста, але все одно темна ✨','Підводка не потекла? 👀','Ок, це було приємно']));save();render();
+};
+$('aS').onclick=()=>{s.sl=s.sl?0:1;say(s.sl?'Сон у темряві… 🌙':'Хто посмів мене розбудити?! 😾');save();render()};
+let pc=0;
+$('pet').onclick=()=>{
+  if(!s||s.sl||$('game').classList.contains('on'))return;
+  hop();fx(pick(['🖤','💜','🦇']));
+  if(Date.now()-pc>4000){pc=Date.now();s.h=cl(s.h+4);addXp(1);save();render()}
+  say(pick(['Не гладь… ну гаразд, ще трохи 🖤','Я не мила. Я естетична.','Ти єдина, хто мене розуміє','Ня. Але готично 🦇','Хмф. *муркоче*']));
+};
+
+/* ===== Міні-гра: лови кристали, оминай кажанів ===== */
+let G=null;
+$('aP').onclick=()=>{
+  if(s.e<15)return say('Нема сил. Я в режимі привида 👻');
+  G={n:0,t:15};$('game').classList.add('on');$('pet').style.opacity=.2;
+  say('Лови 🔮💎🌙, не чіпай 🦇!');hud();
+  G.sp=setInterval(spawn,520);
+  G.cd=setInterval(()=>{G.t--;hud();if(G.t<=0)endGame()},1000);
+};
+function hud(){$('ghud').textContent=`💎 ${G.n}   ⏱ ${G.t}`}
+function spawn(){
+  const b=document.createElement('button');b.className='star';
+  const bad=Math.random()<.22;b.textContent=bad?'🦇':pick(['🔮','💎','🌙','✨']);
+  b.style.left=(3+Math.random()*80)+'%';
+  b.style.animationDuration=(1.7+Math.random()*1.1)+'s';
+  b.onpointerdown=e=>{e.preventDefault();if(bad){G.n=Math.max(0,G.n-2);fxAt(b,'-2')}else G.n++;hud();b.remove()};
+  b.onanimationend=()=>b.remove();
+  $('game').appendChild(b);
+}
+function fxAt(b,t){const d=document.createElement('div');d.className='fx';d.textContent=t;d.style.color='#e0245e';d.style.fontWeight='800';const r=b.getBoundingClientRect(),q=$('stage').getBoundingClientRect();d.style.left=(r.left-q.left)+'px';d.style.top=(r.top-q.top)+'px';$('stage').appendChild(d);setTimeout(()=>d.remove(),1300)}
+function endGame(){
+  clearInterval(G.sp);clearInterval(G.cd);
+  $('game').querySelectorAll('.star').forEach(x=>x.remove());
+  $('game').classList.remove('on');$('pet').style.opacity=1;
+  const n=G.n;s.e=cl(s.e-15);s.h=cl(s.h+Math.min(35,n*2));s.coins+=n;addXp(n);
+  say(n>=15?`${n} кристалів. Я під враженням. Трохи. 🔮`:`Зібрано ${n} 💎`);
+  hop();save();render();G=null;
+}
+
+/* ===== Крамничка ===== */
+function drawShop(){
+  $('shopL').innerHTML=SHOP.map(([k,n,p])=>{
+    const own=s.own.includes(k),on=s.w.includes(k);
+    const b=own?`<button data-k="${k}" class="${on?'w':''}">${on?'Зняти':'Вдягти'}</button>`:`<button data-k="${k}">${p} 💎</button>`;
+    return `<div class="it"><div><svg viewBox="${k==='crown'?'66 4 68 44':k==='web'?'40 34 50 50':k==='bow'?'118 22 44 36':k==='pier'?'136 42 22 24':'60 126 80 56'}">${accSVG(k)}</svg>${n}</div>${b}</div>`;
+  }).join('')+`<div style="font-size:13px;font-weight:700">У тебе: ${s.coins} 💎</div>`;
+}
+$('shopB').onclick=()=>{if(!s||G)return;drawShop();$('shopO').classList.add('on')};
+$('shopX').onclick=()=>{$('shopO').classList.remove('on');render()};
+$('shopL').onclick=e=>{
+  const k=e.target.dataset.k;if(!k)return;const it=SHOP.find(x=>x[0]===k);
+  if(s.own.includes(k)){s.w=s.w.includes(k)?s.w.filter(x=>x!==k):[...s.w,k]}
+  else if(s.coins>=it[2]){s.coins-=it[2];s.own.push(k);s.w.push(k);setTimeout(()=>say(`${it[1]}. Нарешті стиль 😈`),200)}
+  else{e.target.textContent='Мало 💎';setTimeout(drawShop,900);return}
+  save();drawShop();
+};
+let rc=0;
+$('resetB').onclick=e=>{
+  if(Date.now()-rc>2500){rc=Date.now();e.target.textContent='Натисни ще раз, щоб підтвердити';return}
+  Bridge.clear();s=null;$('shopO').classList.remove('on');sel={t:'cat',n:'Морок'};drawStart();$('start').classList.add('on');
+  e.target.textContent='Почати з новим улюбленцем';
+};
+
+/* ===== Запуск ===== */
+if(TG){try{TG.ready();TG.expand()}catch(e){}}
+Bridge.load(v=>{
+  s=v;
+  if(s){tick();render();setTimeout(()=>say(mood()===0?'Ти мене покинула в темряві… 🥀':'О. Ти повернулась. Ну привіт 🖤'),400)}
+  else{drawStart();$('start').classList.add('on')}
+});
+setInterval(()=>{if(s&&!G){tick();render()}},5000);
+setInterval(()=>{if(s)save()},30000);
+</script>
+</body>
+</html>
